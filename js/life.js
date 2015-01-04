@@ -56,8 +56,9 @@ Grid.prototype.set = function(cell, state){
 
 
 Grid.prototype.checkNeighbors = function(cell){
-	var living = 0,
-			cell = this.get(cell);
+	var living = 0;
+	cell = this.get(cell);
+	
 	for (var dir in surround) {
 		var check = cell.add(surround[dir]);
 		if (this.contains(check)){
