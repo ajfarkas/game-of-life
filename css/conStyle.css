@@ -1,0 +1,48 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.life {
+	display: inline-block;
+	padding: 5px;
+	border: 2px solid black;
+	line-height: 0;
+	font-size: 0;
+}
+
+.col {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: aliceblue;
+	outline: 1px solid gray;
+}
+.row {
+	display: block;
+}
+
+button {
+	/*position: relative;*/
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	border: none;
+	outline: none;
+	color: white;
+}
+button:active {
+	/*top: 1px;*/
+	border: 1px solid white;
+	font-size: .66rem;
+}
+button[name="start"] {
+	background-color: green;
+}
+button[name="stop"] {
+	background-color: darkred;
+}
+button[name="reset"] {
+	background-color: cyan;
+	color: black;
+}
