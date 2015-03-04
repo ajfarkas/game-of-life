@@ -140,7 +140,8 @@ function displayGrid(){
 
 	for (var i = 0; i < gridLen; i++){
 		grid.board[i].node = cells[i];
-		cells[i].className += " dead";
+		if( !cells[i].className.match(/(dead|alive)/) )
+			cells[i].className += " dead";
 	}
 	life.onclick = function setAllCells(e){
 		setCell.call(e.target);
