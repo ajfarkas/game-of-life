@@ -96,8 +96,6 @@ function displayGrid(){
 			gridLen = grid.board.length,
 			cells = document.getElementsByClassName('col'),
 			cellLen = cells.length,
-			dead = "white",
-			alive = "black",
 			startButton = document.querySelector('button[name="start"]'),
 			stopButton,
 			resetButton = document.querySelector('button[name="reset"]');
@@ -107,11 +105,11 @@ function displayGrid(){
 			if (this == grid.board[j].node){
 				if (grid.board[j].state == "alive"){
 					grid.board[j].state = "dead";
-					this.style.backgroundColor = dead;
+					this.className = this.className.replace('alive', 'dead');
 				}
 				else {
 					grid.board[j].state = "alive";
-					this.style.backgroundColor = alive;
+					this.className = this.className.replace('dead', 'alive')
 				}
 				break
 			}
@@ -128,10 +126,10 @@ function displayGrid(){
 				var cell = col[x],
 				    cellInfo = grid.get(new Cell(x, y));
 				if ( cellInfo.state == "alive" ){ 
-					cell.style.backgroundColor = alive;
+					cell.className = cell.className.replace('dead', 'alive');
 					total ++;
 				}
-				else cell.style.backgroundColor = dead;
+				else cell.className = cell.className.replace('alive', 'dead');
 			}
 		}
 		if (total === 0) {
@@ -142,6 +140,7 @@ function displayGrid(){
 
 	for (var i = 0; i < gridLen; i++){
 		grid.board[i].node = cells[i];
+		cells[i].className += " dead";
 	}
 	life.onclick = function setAllCells(e){
 		setCell.call(e.target);
@@ -188,7 +187,5 @@ function displayGrid(){
 
 }
 
-window.onload = function loaded(){
-	displayGrid();
-}
+window.addEventListener("load", displayGrid);
 

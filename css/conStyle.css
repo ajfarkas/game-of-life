@@ -22,6 +22,9 @@
 	display: block;
 }
 
+.alive { background-color: black; }
+.dead { background-color: white; }
+
 button {
 	/*position: relative;*/
 	width: 50px;
