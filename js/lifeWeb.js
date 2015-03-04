@@ -87,20 +87,23 @@ Grid.prototype.generation = function(){
 /*Attach script to webpage*/
 
 function displayGrid(){
-	var rows = document.querySelectorAll('.row'),
-    height = rows.length,
-    cols = rows[0].querySelectorAll('.col'),
-    width = cols.length,
-		grid = new Grid(width, height),
-		cells = document.querySelectorAll('.col'),
-		dead = "white",
-		alive = "black",
-		startButton = document.querySelector('button[name="start"]'),
-		stopButton,
-		resetButton = document.querySelector('button[name="reset"]');
+	var life = document.getElementsByClassName('life')[0],
+			rows = document.getElementsByClassName('row'),
+	    height = rows.length,
+	    cols = rows[0].getElementsByClassName('col'),
+	    width = cols.length,
+			grid = new Grid(width, height),
+			gridLen = grid.board.length,
+			cells = document.getElementsByClassName('col'),
+			cellLen = cells.length,
+			dead = "white",
+			alive = "black",
+			startButton = document.querySelector('button[name="start"]'),
+			stopButton,
+			resetButton = document.querySelector('button[name="reset"]');
 
 	function setCell(){
-		for (var j = 0; j < cells.length; j++){
+		for (var j = 0; j < cellLen; j++){
 			if (this == grid.board[j].node){
 				if (grid.board[j].state == "alive"){
 					grid.board[j].state = "dead";
@@ -120,7 +123,7 @@ function displayGrid(){
 		var total = 0;
 		for (var y = 0; y < height; y++){
 			var row = rows[y],
-					col = row.querySelectorAll('.col');
+					col = row.getElementsByClassName('col');
 			for (var x = 0; x < width; x++){
 				var cell = col[x],
 				    cellInfo = grid.get(new Cell(x, y));
@@ -137,13 +140,12 @@ function displayGrid(){
 		}
 	}
 
-	/*Initialize Grid*/
-	! function setAllCells(){
-		for (var i = 0; i < grid.board.length; i++){
-			grid.board[i].node = cells[i];
-			cells[i].addEventListener("click", setCell); 
-		}
-	}();
+	for (var i = 0; i < gridLen; i++){
+		grid.board[i].node = cells[i];
+	}
+	life.onclick = function setAllCells(e){
+		setCell.call(e.target);
+	};
 
 	/*Set example board*/
 	grid.set(new Cell(4,4), "alive");
@@ -160,21 +162,23 @@ function displayGrid(){
 	}
 
 	! function startStop(){
-		startButton.onclick = function setGo(){
+		startButton.onclick = function setGo(e){
 			var callGo = setInterval(go, 500);
 			stopButton = startButton;
 			stopButton.setAttribute("name", "stop");
 			stopButton.innerHTML = "Stop";
 			startButton = null;
 
-			stopButton.onclick = function setStop(){
+			stopButton.onclick = function setStop(ev){
 				clearInterval(callGo);
 				startButton = stopButton;
 				startButton.setAttribute("name", "start");
 				startButton.innerHTML = "Start";
 				stopButton = null;
 				startStop();
+				ev.preventDefault();
 			};
+			e.preventDefault();
 		};
 	}();
 	resetButton.onclick = function reset(){
